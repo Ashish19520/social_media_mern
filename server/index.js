@@ -13,7 +13,7 @@ app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 app.use(cors());
 
 const PORT = process.env.PORT || 5000;
-const CONNECTIONSRTING = `mongodb+srv://ashishProject:Shivam_8755@cluster0.yzsw1ma.mongodb.net/?retryWrites=true&w=majority`;
+const CONNECTIONSRTING = `mongodb+srv://admin:test@cluster0.yzsw1ma.mongodb.net/?retryWrites=true&w=majority/memories`;
 
 mongoose.set('strictQuery', false);
 mongoose
