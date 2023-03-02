@@ -20,13 +20,16 @@ export default function Form({currentId,setCurrentId}) {
     else{
     dispatch(createPost(postData));
     }
+   clear();
   }
 
   useEffect(()=>{
     if(post) setPostData(post);
   },[post])
-  const clear=()=>{
 
+  const clear=()=>{
+    setCurrentId(null);
+    setPostData({ creator: '', title: '', message: '', tags: '', selectedFile: '' })
   }
   return (
     <Paper className={classes.paper}>
@@ -37,7 +40,7 @@ export default function Form({currentId,setCurrentId}) {
         onSubmit={handleSubmit}
       >
         <Typography variant="h6">
-          {/* {currentId ? `Editing "${post.title}"` : "Creating a Memory"} */}
+          {currentId ? `Editing "${post.title}"` : "Creating a Memory"}
         </Typography>
         <TextField
           name="creator"
