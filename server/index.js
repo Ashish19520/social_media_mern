@@ -3,6 +3,8 @@ import mongoose from "mongoose";
 import bodyParser from "body-parser";
 import cors from "cors";
 import posts from './routes/posts.js';
+import dotenv from 'dotenv';
+dotenv.config();
 
 const app = express();
 app.use(cors());
@@ -11,10 +13,11 @@ app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 
 app.use('/posts',posts);
 
-
+ 
 
 const PORT = process.env.PORT || 5000;
-const CONNECTIONSRTING = `mongodb+srv://ashishSocial:Shivam@cluster0.yzsw1ma.mongodb.net/memories`
+const CONNECTIONSRTING = process.env.CONNECTION_URL
+// `mongodb+srv://ashishSocial:Shivam@cluster0.yzsw1ma.mongodb.net/memories`
 
 
 mongoose.set('strictQuery', false);
