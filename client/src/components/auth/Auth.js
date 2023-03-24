@@ -13,11 +13,15 @@ import {
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Input from "./Input";
 import { GoogleLogin, googleLogout } from "@react-oauth/google";
+import { useNavigate } from "react-router-dom";
+
 function Auth() {
   const classes = style;
   const dispatch=useDispatch();
   const [isSignup, setIsSignUp] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const navigate=useNavigate();
+
   const handleShowPassword = () =>
     setShowPassword((prevShowPassword) => !prevShowPassword);
   const handleSubmit = () => {};
@@ -30,7 +34,8 @@ function Auth() {
     const clientId=res?.clientId;
     const credential=res?.credential;
     try {
-      dispatch({type:'AUTH',data:{clientId,credential}})
+      dispatch({type:'AUTH',data:{clientId,credential}});
+      navigate("/")
     } catch (error) {
       console.log(error);
     }
