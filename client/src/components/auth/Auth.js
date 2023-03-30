@@ -14,18 +14,34 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Input from "./Input";
 import { GoogleLogin, googleLogout } from "@react-oauth/google";
 import { useNavigate } from "react-router-dom";
+import {signin,signup} from "../../actions/auth";
 
+const initalState={firstName:'',lastName:'',email:'',password:'',confirmPassword:''}
 function Auth() {
   const classes = style;
   const dispatch=useDispatch();
   const [isSignup, setIsSignUp] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [formData,serFormData]=useState(initalState);
   const navigate=useNavigate();
+  
 
   const handleShowPassword = () =>
     setShowPassword((prevShowPassword) => !prevShowPassword);
-  const handleSubmit = () => {};
-  const handleChange = () => {};
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(formData);
+  };
+  const handleChange = (e) => {
+    serFormData({...formData,[e.target.name]:e.target.value});
+    if(isSignup){
+      dispatch(signup(formData,navigate));
+    }
+    else{
+      dispatch(signin(formData,navigate));
+    }
+  };
   const switchMode = () => {
     setIsSignUp((prevIsSignup) => !prevIsSignup);
     handleShowPassword(false);

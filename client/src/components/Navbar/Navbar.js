@@ -1,6 +1,6 @@
 import React,{useState,useEffect} from 'react'
 import {AppBar,Avatar,Toolbar,Typography,Button} from "@material-ui/core";
-import {json, Link} from 'react-router-dom';
+import {json, Link,useLocation} from 'react-router-dom';
 import useStyles from './styles'
 import memories from '../../images/memories.png'
 import { useDispatch } from 'react-redux';
@@ -14,13 +14,14 @@ const Navbar =()=> {
     const [user,setUser]=useState(JSON.parse(localStorage.getItem('profile')));
     const navigate=useNavigate();
     const dispatch=useDispatch();
+    const location=useLocation();
     console.log(user);
     useEffect(() => {
         const clientId=user?.clientId;
       
 
         setUser(JSON.parse(localStorage.getItem('profile')));
-    }, []);
+    }, [location]);
     const signOut=()=>{
         setUser(null);
         dispatch({type:'LOGOUT'})

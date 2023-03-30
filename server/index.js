@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import bodyParser from "body-parser";
 import cors from "cors";
 import posts from './routes/posts.js';
+import users from './routes/users.js';
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -12,6 +13,7 @@ app.use(bodyParser.json({ limit: "30mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 
 app.use('/posts',posts);
+app.use('/user',users);
 
  
 
