@@ -16,10 +16,16 @@ export const signin=async(req,res)=>{
     }
 }
 export const signup=async(req,res)=>{
-  
+    const {email,password,confirmPassword,firstName,lastName}=req.body;
     try {
-       
+       const existingUser=Users.findOne({email});
+       if(existingUser) return res.status(401).json({message:"User already exist's"});
+       if(password!=confirmPassword) return res.status(400).json({message:"password mismatch"});
+        const result=await Users.create({email,password:hashedPassword,name:`${firstName} ${lastName}`});
+        const hashedPassword=bcrypt.hash(password,12);
+        const token=jwt.sign({email:result.email,id:result._id},"test",{expiresIn:"1h"});
+        res.result(200).json({result:result,token});
     } catch (error) {
-        
+        res.status(500).json({message:"Something went wrong"});
     }
 }
