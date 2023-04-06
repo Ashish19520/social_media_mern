@@ -8,17 +8,18 @@ import { createPost,updatePost } from "../../actions/posts";
 
 export default function Form({currentId,setCurrentId}) {
   const classes = useStyles();
-  const [postData, setPostData] = useState({ creator: '', title: '', message: '', tags: '', selectedFile: '' });
+  const [postData, setPostData] = useState({ title: '', message: '', tags: '', selectedFile: '' });
   const dispatch=useDispatch();
   const post=useSelector((state)=>currentId?state.posts.find((p)=>p._id===currentId):null);
+  const user=JSON.parse(localStorage.getItem('profile'));
 
   const handleSubmit=async (e)=>{
     e.preventDefault();
     if(currentId){
-      dispatch(updatePost(currentId,postData))
+      dispatch(updatePost({...postData,name:user?.result?.name}))
     }
     else{
-    dispatch(createPost(postData));
+    dispatch(createPost({...postData,name:user?.result?.name}));
     }
    clear();
   }
@@ -29,7 +30,18 @@ export default function Form({currentId,setCurrentId}) {
 
   const clear=()=>{
     setCurrentId(null);
-    setPostData({ creator: '', title: '', message: '', tags: '', selectedFile: '' })
+    setPostData({ title: '', message: '', tags: '', selectedFile: '' })
+  }
+  if(!user?.result?.name){
+    return(
+      <Paper className={classes.paper}>
+        <Typography variant="h6" align="center">
+         Please signin to create a post and like other post
+
+        </Typography>
+
+      </Paper>
+    )
   }
   return (
     <Paper className={classes.paper}>
@@ -42,7 +54,7 @@ export default function Form({currentId,setCurrentId}) {
         <Typography variant="h6">
           {currentId ? `Editing "${post.title}"` : "Creating a Memory"}
         </Typography>
-        <TextField
+        {/* <TextField
           name="creator"
           variant="outlined"
           label="Creator"
@@ -51,7 +63,7 @@ export default function Form({currentId,setCurrentId}) {
           onChange={(e) =>
             setPostData({ ...postData, creator: e.target.value })
           }
-        />
+        /> */}
         <TextField
           name="title"
           variant="outlined"

@@ -12,9 +12,12 @@ function Home() {
     const classes=useStyles();
     const dispatch=useDispatch();
     const [currentId,setCurrentId]=useState(null);
+    const user=JSON.parse(localStorage.getItem('profile'));
 
     useEffect(()=>{
+      if(user?.result?.name){
     dispatch(getPosts())
+  }
     },[currentId,dispatch])
 
   return (
