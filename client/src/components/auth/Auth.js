@@ -22,29 +22,27 @@ function Auth() {
   const dispatch=useDispatch();
   const [isSignup, setIsSignUp] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const [formData,serFormData]=useState(initalState);
+  const [formData,setFormData]=useState(initalState);
   const navigate=useNavigate();
   
 
-  const handleShowPassword = () =>
-    setShowPassword((prevShowPassword) => !prevShowPassword);
+  const handleShowPassword = () => setShowPassword((prevShowPassword) => !prevShowPassword);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formData);
-  };
-  const handleChange = (e) => {
-    serFormData({...formData,[e.target.name]:e.target.value});
     if(isSignup){
       dispatch(signup(formData,navigate));
     }
     else{
       dispatch(signin(formData,navigate));
-    }
+    }   };
+  const handleChange = (e) => {
+    setFormData({...formData,[e.target.name]:e.target.value});
+    
   };
   const switchMode = () => {
     setIsSignUp((prevIsSignup) => !prevIsSignup);
-    handleShowPassword(false);
+    setShowPassword(false);
   };
   const googleSuccess=async (res)=>{
     const clientId=res?.clientId;

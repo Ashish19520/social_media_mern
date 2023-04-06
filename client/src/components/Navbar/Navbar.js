@@ -25,7 +25,7 @@ const Navbar =()=> {
     const signOut=()=>{
         setUser(null);
         dispatch({type:'LOGOUT'})
-        navigate('/');
+        navigate('/auth');
         localStorage.clear();
     }
   return (
