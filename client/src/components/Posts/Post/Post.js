@@ -7,6 +7,7 @@ import {
   CardMedia,
   Button,
   Typography,
+  ButtonBase,
 } from "@material-ui/core/";
 import ThumbUpAltIcon from "@material-ui/icons/ThumbUpAlt";
 import ThumbsUpAltOutlined from "@material-ui/icons/ThumbUpAltOutlined";
@@ -15,10 +16,12 @@ import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import moment from "moment";
 import { useDispatch } from "react-redux";
 import { likePost, deletePost } from "../../../actions/posts";
+import {useNavigate} from "react-router-dom";
 
 export default function Post({ post, setCurrentId }) {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem("profile"));
   const Likes = () => {
     if (post.likes.length > 0) {
@@ -48,8 +51,13 @@ export default function Post({ post, setCurrentId }) {
       </>
     );
   };
+  const openPost = () => {
+    navigate(`/post/${post._id}`);
+  };
   return (
-    <Card className={classes.card}>
+   
+    <Card onClick={openPost} className={classes.card}>   
+     
       <CardMedia
         className={classes.media}
         image={
@@ -58,6 +66,7 @@ export default function Post({ post, setCurrentId }) {
         }
         title={post.title}
       />
+      {/* <ButtonBase className={classes.cardActions} onClick={openPost}>   */}
       <div className={classes.overlay}>
         <Typography variant="h6">{post.name}</Typography>
         <Typography variant="body2">
@@ -94,6 +103,7 @@ export default function Post({ post, setCurrentId }) {
           {post.message}
         </Typography>
       </CardContent>
+     
       <CardActions className={classes.cardActions}>
         <Button
           size="small"
@@ -115,6 +125,8 @@ export default function Post({ post, setCurrentId }) {
           </Button>
         )}
       </CardActions>
+      {/* </ButtonBase> */}
     </Card>
+    
   );
 }
