@@ -9,16 +9,19 @@ function Comments({post}) {
     
     const classes=styles();
     const [comments,setComments]=useState(post?.comment);
-    console.log("------",comments)
     const [comment,setComment]=useState('');
     const user=JSON.parse(localStorage.getItem('profile'));
     const dispatch=useDispatch();
+    const commentsRef=useRef(); 
 
     
-    const handleClick=()=>{
+    const handleClick=async()=>{
     const finalComment=`${user.result.name}:${comment}`;
-    dispatch(commentPost(finalComment,post._id));
+    const newComments=await dispatch(commentPost(finalComment,post._id));
+    setComments(newComments);
+    setComment('');
     }
+    // commentsRef.current.scrollIntoView({behavior:'smooth'})
   return (
     <div>
         <div className={classes.commentOuterContainer}>
@@ -26,9 +29,11 @@ function Comments({post}) {
                 <Typography gutterBottom variant='h6'>Comments</Typography>
                 {comments?.map((c,i)=>(
                     <Typography key={i} gutterBottom variant='subtitle1'>
-                        {c}
+                        <strong>{c.split(':')[0]}</strong>
+                        {c.split(":")[1]}
                     </Typography>
-                ))}
+                ))} 
+                <div ref={commentsRef}/>
             </div>
             {user?.result.name&&(
             <div style={{width:'70%'}}>

@@ -108,6 +108,6 @@ export const commentPost=async(req,res)=>{
     } catch (error) {
         console.log(error);
     }  
-  
+
     
 }
